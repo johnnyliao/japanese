@@ -12,7 +12,7 @@ urlpatterns = patterns("",
     ("^admin/", include(admin.site.urls)),
 
     url(r"^account/", include("account.urls")),
-    #url(r"^course/", include("course.urls")),
+    url(r"^course/", include("course.urls")),
 
     url(r'^docs/', include('rest_framework_swagger.urls')),
     url(r"^api-auth/", include("rest_framework.urls", namespace="rest_framework")),
