@@ -24,5 +24,18 @@ class GetWordSerializer(serializers.ModelSerializer):
 		#顯示原本的字串obj.get_foo_display()
 		return obj.get_type_display()
 
+class GetWordVerbSerializer(serializers.ModelSerializer):
+	display_type = serializers.SerializerMethodField('get_display_type')
+
+	class Meta:
+		model = Word
+
+	def get_display_type(self, obj):
+		#顯示原本的字串obj.get_foo_display()
+		return u"動詞"
+
+
 class SearchWordSerializer(serializers.Serializer):
 	word = serializers.CharField(required=False)
+	level = serializers.CharField()
+	number = serializers.CharField()

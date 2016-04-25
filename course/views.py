@@ -4,7 +4,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from course.models import Word, Verb
-from course.serializers import GetWordSerializer, SearchWordSerializer, GetStartLimitDataSerializer
+from course.serializers import GetWordSerializer, SearchWordSerializer, GetStartLimitDataSerializer, GetWordVerbSerializer
 from django.contrib import auth
 from rest_framework import generics, status
 from rest_framework.response import Response
@@ -44,18 +44,32 @@ class SearchWordView(generics.GenericAPIView):
 		serializer = self.serializer_class(data=request.DATA)
 		if serializer.is_valid():
 			word = serializer.data.get('word', None)
+			level = serializer.data.get('level')
+			number = serializer.data.get('number')
+
+			word_objects_all = Word.objects.all()
+			verb_objects_all = Verb.objects.all()
+
+			if level != "all":
+				word_objects_all = word_objects_all.filter(level=level)
+				verb_objects_all = verb_objects_all.filter(level=level)
+
+			if number != "all":
+				word_objects_all = word_objects_all.filter(number=number)
+				verb_objects_all = verb_objects_all.filter(number=number)
 
 			if word:
-				search_words = Word.objects.all().filter(Q(kanji=word) | Q(kana=word) | Q(chinese=word))
-				#無單字 搜尋動詞
-				if not search_words:
-					search_words = Verb.objects.all().filter(Q(kanji=word) | Q(kana=word) | Q(chinese=word))
+				word_objects_all = word_objects_all.filter(Q(kanji=word) | Q(kana=word) | Q(chinese=word))
+				verb_objects_all = verb_objects_all.filter(Q(kanji=word) | Q(kana=word) | Q(chinese=word))
 
-				result_serializer = GetWordSerializer(search_words, many=True)
+			word_serializer = GetWordSerializer(word_objects_all, many=True)
+			verb_serializer = GetWordVerbSerializer(verb_objects_all, many=True)
 
-				return Response(result_serializer.data, status=status.HTTP_200_OK)
-			else:
-				return Response([], status=status.HTTP_200_OK)
+			result = word_serializer.data + verb_serializer.data
+
+
+			return Response(result, status=status.HTTP_200_OK)
+
 		else:
 			return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
