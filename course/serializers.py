@@ -23,3 +23,6 @@ class GetWordSerializer(serializers.ModelSerializer):
 	def get_display_type(self, obj):
 		#顯示原本的字串obj.get_foo_display()
 		return obj.get_type_display()
+
+class SearchWordSerializer(serializers.Serializer):
+	word = serializers.CharField(required=False)
