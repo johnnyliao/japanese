@@ -79,7 +79,6 @@ class Verb(WordBase):
 class UChiYoSo(models.Model):
 	kanji = models.CharField(_(u"漢字"), max_length=30, blank=True, null=True)
 	kana = models.CharField(_(u"假名"), max_length=30)
-	chinese = models.CharField(_(u"解釋"), max_length=30)
 
 	class Meta:
 		verbose_name = _(u"敬語")
