@@ -9,8 +9,8 @@ from salmonella.admin import SalmonellaMixin
 from django.utils.translation import ugettext_lazy as _
 
 class UChiYoSoAdmin(SalmonellaMixin, admin.ModelAdmin):
-    list_display = ["kanji", "kana", "chinese"]
-    search_fields = ["kanji", "kana", "chinese"]
+    list_display = ["kanji", "kana"]
+    search_fields = ["kanji", "kana"]
 
 class VerbAdmin(SalmonellaMixin, admin.ModelAdmin):
     list_display = ["kanji", "kana", "chinese", "group", "type", "level", "number"]
