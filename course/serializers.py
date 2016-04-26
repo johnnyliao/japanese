@@ -1,7 +1,7 @@
 #-*- encoding: utf-8 -*-
 
 from django.utils.translation import ugettext_lazy as _
-from course.models import Word, Verb
+from course.models import Word, Verb, UChiYoSo
 
 from rest_framework import serializers
 
@@ -14,8 +14,15 @@ class GetStartLimitDataSerializer(serializers.Serializer):
     start = serializers.IntegerField(required=False)
     limit = serializers.IntegerField(required=False)
 
+class UChiYoSoSerializer(serializers.ModelSerializer):
+
+	class Meta:
+		model = UChiYoSo
+
 class GetWordSerializer(serializers.ModelSerializer):
 	display_type = serializers.SerializerMethodField('get_display_type')
+	uchi = UChiYoSoSerializer()
+	yoso = UChiYoSoSerializer()
 
 	class Meta:
 		model = Word
@@ -26,6 +33,8 @@ class GetWordSerializer(serializers.ModelSerializer):
 
 class GetWordVerbSerializer(serializers.ModelSerializer):
 	display_type = serializers.SerializerMethodField('get_display_type')
+	uchi = UChiYoSoSerializer()
+	yoso = UChiYoSoSerializer()
 
 	class Meta:
 		model = Word

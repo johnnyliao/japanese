@@ -53,20 +53,37 @@ class WordBase(models.Model):
 		return super(WordBase, self).save(*args, **kwargs)
 
 	class Meta:
-	  	abstract = True
+		abstract = True
 
 class Word(WordBase):
 	type = models.CharField(_(u"類型"), max_length=20, choices=TYPE_CHOICES)
+	uchi = models.OneToOneField('UChiYoSo', related_name='word_uchi', verbose_name=_(u"敬語(uchi)"), blank=True, null=True)
+	yoso = models.OneToOneField('UChiYoSo', related_name='word_yoso', verbose_name=_(u"敬語(yoso)"), blank=True, null=True)
 
 	class Meta:
 		verbose_name = _(u"單字")
-	  	verbose_name_plural = _(u"單字列表")
+		verbose_name_plural = _(u"單字列表")
 
 #動詞
 class Verb(WordBase):
 	group = models.CharField(_(u"Group"), max_length=5, choices=GROUP_CHOICES)
 	type = models.CharField(_(u"Type"), max_length=5, choices=VERB_TYPE_CHOICES)
+	uchi = models.OneToOneField('UChiYoSo', related_name='verb_uchi', verbose_name=_(u"敬語(uchi)"), blank=True, null=True)
+	yoso = models.OneToOneField('UChiYoSo', related_name='verb_yoso', verbose_name=_(u"敬語(yoso)"), blank=True, null=True)
 
 	class Meta:
 		verbose_name = _(u"動詞")
-	  	verbose_name_plural = _(u"動詞列表")
+		verbose_name_plural = _(u"動詞列表")
+
+
+class UChiYoSo(models.Model):
+	kanji = models.CharField(_(u"漢字"), max_length=30, blank=True, null=True)
+	kana = models.CharField(_(u"假名"), max_length=30)
+	chinese = models.CharField(_(u"解釋"), max_length=30)
+
+	class Meta:
+		verbose_name = _(u"敬語")
+		verbose_name_plural = _(u"敬語列表")
+
+	def __unicode__(self):
+		return self.kana
