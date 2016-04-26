@@ -33,6 +33,7 @@ class GetWordSerializer(serializers.ModelSerializer):
 
 class GetWordVerbSerializer(serializers.ModelSerializer):
 	display_type = serializers.SerializerMethodField('get_display_type')
+	type = serializers.SerializerMethodField('get_type')
 	uchi = UChiYoSoSerializer()
 	yoso = UChiYoSoSerializer()
 
@@ -40,8 +41,10 @@ class GetWordVerbSerializer(serializers.ModelSerializer):
 		model = Word
 
 	def get_display_type(self, obj):
-		#顯示原本的字串obj.get_foo_display()
 		return u"動詞"
+
+	def get_type(self, obj):
+		return u"verb"
 
 
 class SearchWordSerializer(serializers.Serializer):
