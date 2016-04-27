@@ -33,18 +33,15 @@ class GetWordSerializer(serializers.ModelSerializer):
 
 class GetWordVerbSerializer(serializers.ModelSerializer):
 	display_type = serializers.SerializerMethodField('get_display_type')
-	type = serializers.SerializerMethodField('get_type')
+	#type = serializers.SerializerMethodField('get_type')
 	uchi = UChiYoSoSerializer()
 	yoso = UChiYoSoSerializer()
 
 	class Meta:
-		model = Word
+		model = Verb
 
 	def get_display_type(self, obj):
 		return u"動詞"
-
-	def get_type(self, obj):
-		return u"verb"
 
 
 class SearchWordSerializer(serializers.Serializer):
