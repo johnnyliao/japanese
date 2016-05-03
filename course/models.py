@@ -113,6 +113,7 @@ class Grammar(models.Model):
 	number = models.IntegerField(_(u"第幾天"))
 	title = models.CharField(_(u"標題"), max_length=100)
 	chinese = models.CharField(_(u"中文解釋"), max_length=100)
+	g_number = models.CharField(_(u"文法編號"), max_length=100, default="文法1")
 
 	class Meta:
 		verbose_name = _(u"文法")
