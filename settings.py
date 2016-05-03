@@ -24,6 +24,7 @@ from django.utils.translation import ugettext_lazy as _
 ADMIN_MENU_ORDER = (
     ("Site", ("sites.Site", "redirects.Redirect", "conf.Setting")),
     (_(u"單字設定"), ("course.Word", "course.Verb", "course.UChiYoSo")),
+    (_(u"文法設定"), ("course.Grammar", "course.GrammarExample", "course.GrammarImage")),
 )
 
 

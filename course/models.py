@@ -86,3 +86,34 @@ class UChiYoSo(models.Model):
 
 	def __unicode__(self):
 		return self.kana
+
+class GrammarImage(models.Model):
+	grammar = models.ForeignKey('Grammar',related_name='grammar_image', verbose_name=_(u"文法"))
+	image = models.ImageField(_(u"文法解說圖片"), upload_to='grammar/grammar_image')
+
+	class Meta:
+		verbose_name = _(u"文法圖片")
+		verbose_name_plural = _(u"文法圖片列表")
+
+	def image_tag(self):
+		return '<img style="width:100px;height:100px" src="' + self.image.url + '" />'
+
+	image_tag.allow_tags = True
+
+class GrammarExample(models.Model):
+	grammar = models.ForeignKey('Grammar',related_name='grammar_example', verbose_name=_(u"文法"))
+	example = models.CharField(_(u"例文"), max_length=200)
+
+	class Meta:
+		verbose_name = _(u"文法範例")
+		verbose_name_plural = _(u"文法範例列表")
+
+class Grammar(models.Model):
+	level = models.CharField(_(u"課程等級"), max_length=10, choices=LEVEL_CHOICES)
+	number = models.IntegerField(_(u"第幾天"))
+	title = models.CharField(_(u"標題"), max_length=100)
+	chinese = models.CharField(_(u"中文解釋"), max_length=100)
+
+	class Meta:
+		verbose_name = _(u"文法")
+		verbose_name_plural = _(u"文法列表")
