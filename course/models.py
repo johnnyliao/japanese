@@ -16,6 +16,7 @@ TYPE_CHOICES = (
 	("time", u'時數詞'),
 	("sulu_noun", u'する名詞'),
 	("na_noun", u'なにで名詞'),
+	("fukushi", u'副詞'),
 )
 
 LEVEL_CHOICES = (
