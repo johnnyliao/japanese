@@ -23,8 +23,10 @@ from django.utils.translation import ugettext_lazy as _
 
 ADMIN_MENU_ORDER = (
     ("Site", ("sites.Site", "redirects.Redirect", "conf.Setting")),
+    (_(u"使用者設定"), ("account.User")),
     (_(u"單字設定"), ("course.Word", "course.Verb", "course.UChiYoSo")),
     (_(u"文法設定"), ("course.Grammar", "course.GrammarExample", "course.GrammarImage")),
+    (_(u"新聞設定"), ("news.News", "news.NewsAudio")),
 )
 
 
@@ -221,7 +223,7 @@ TEMPLATE_DIRS = (os.path.join(PROJECT_ROOT, "templates"),)
 INSTALLED_APPS = (
     "account",
     "course",
-
+    "news",
     "rest_framework",
     "rest_framework_swagger",
 
@@ -431,3 +433,7 @@ except ImportError:
     pass
 else:
     set_dynamic_settings(globals())
+
+#AWS S3 setting
+AWS_ACCESS_KEY_ID = 'AKIAIH7KJ5XX7DOY2ULQ'
+AWS_SECRET_ACCESS_KEY = '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'
