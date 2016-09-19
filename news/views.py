@@ -3,7 +3,7 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
-from news.models import News, NewsAudio, NewsPhoto
+from news.models import News, NewsAudio, NewsPhoto, AWS
 from news.serializers import NewsSerializers
 from django.contrib import auth
 from rest_framework import generics, status
@@ -88,7 +88,8 @@ def pres_file_from_website(news, filename, type):
 
 def upload_file_to_s3(filename, fn):
 	# connect to the bucket
-	conn = boto.connect_s3(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
+	aws = AWS.objects.all()[0]
+	conn = boto.connect_s3(aws.key_id, aws.s_key)
 	bucket = conn.get_bucket("johnny.liao")
 	# go through each version of the file
 	# create a key to keep track of our file in the storage

@@ -18,7 +18,10 @@ class NewsAdmin(SalmonellaMixin, admin.ModelAdmin):
 class NewsAudioAdmin(SalmonellaMixin, admin.ModelAdmin):
     list_display = ["news", "path"]
 
+class AWSAdmin(SalmonellaMixin, admin.ModelAdmin):
+    list_display = ["key_id", "s_key"]
 
 admin.site.register(News, NewsAdmin)
 admin.site.register(NewsAudio, NewsAudioAdmin)
+admin.site.register(AWS, AWSAdmin)
 
