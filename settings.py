@@ -434,6 +434,3 @@ except ImportError:
 else:
     set_dynamic_settings(globals())
 
-#AWS S3 setting
-AWS_ACCESS_KEY_ID = 'AKIAIH7KJ5XX7DOY2ULQ'
-AWS_SECRET_ACCESS_KEY = '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'
