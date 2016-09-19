@@ -63,8 +63,6 @@ class UpdateNewsView(generics.GenericAPIView):
 
 				pres_file_from_website(news, result['content']['audio'], "audio")
 
-				#pres_file_from_website(news, result['content']['image'])
-			break
 		return Response("ok", status=status.HTTP_200_OK)
 
 
