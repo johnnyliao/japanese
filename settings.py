@@ -149,7 +149,7 @@ TEMPLATE_LOADERS = (
 
 AUTHENTICATION_BACKENDS = (
     "mezzanine.core.auth_backends.MezzanineBackend",
-    #"allauth.account.auth_backends.AuthenticationBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
 )
 
 # List of finder classes that know how to find static files in
@@ -249,12 +249,12 @@ INSTALLED_APPS = (
     #"geoposition",
     "toolkit",
     'salmonella',
-    #'allauth',
-    #'allauth.account',
-    #'allauth.socialaccount',
-    #'allauth.socialaccount.providers.facebook',
-    #'allauth.socialaccount.providers.twitter',
-    #'allauth.socialaccount.providers.weibo',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.twitter',
+    'allauth.socialaccount.providers.weibo',
 )
 
 # List of processors used by RequestContext to populate the context.
@@ -433,4 +433,20 @@ except ImportError:
     pass
 else:
     set_dynamic_settings(globals())
+
+###################
+# allauth Setting #
+###################
+
+ACCOUNT_LOGOUT_ON_GET = True
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_EMAIL_REQUIRED = False
+SOCIALACCOUNT_AUTO_SIGNUP = True
+SOCIALACCOUNT_PROVIDERS = {
+    'facebook': {
+        'SCOPE': ['user_friends','public_profile','email','user_about_me'],
+        'METHOD': 'js_sdk',  # instead of 'oauth2'
+        'VERSION': 'v2.7'
+    }
+}
 

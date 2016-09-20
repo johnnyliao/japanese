@@ -10,7 +10,7 @@ admin.autodiscover()
 
 urlpatterns = patterns("",
     ("^admin/", include(admin.site.urls)),
-
+    url(r'^auth/', include('allauth.urls')),
     url(r"^account/", include("account.urls")),
     url(r"^course/", include("course.urls")),
     url(r"^news/", include("news.urls")),
