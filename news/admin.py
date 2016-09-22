@@ -16,7 +16,7 @@ class NewsAdmin(SalmonellaMixin, admin.ModelAdmin):
     #salmonella_fields  = ["uchi", "yoso"]
 
 class NewsAudioAdmin(SalmonellaMixin, admin.ModelAdmin):
-    list_display = ["news", "path"]
+    list_display = ["news", "path", "source"]
 
 class AWSAdmin(SalmonellaMixin, admin.ModelAdmin):
     list_display = ["key_id", "s_key"]

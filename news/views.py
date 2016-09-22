@@ -84,16 +84,16 @@ class GetNewsView(generics.GenericAPIView):
 def pres_file_from_website(news, filename, type):
 	print "downloading with requests"
 	file_name = filename.split('.')
-	url = 'http://www3.nhk.or.jp/news/easy/' + file_name[0] + '/' + filename
-	print url
-	r = requests.get(url)
+	source_url = 'http://www3.nhk.or.jp/news/easy/' + file_name[0] + '/' + filename
+	print source_url
+	r = requests.get(source_url)
 	fn = "/tmp/"+filename
 	with open(fn, "wb") as code:
 		code.write(r.content)
 
 	url = upload_file_to_s3(filename, fn)
 	if url:
-		news_audio = NewsAudio(news=news, path=url, source=url)
+		news_audio = NewsAudio(news=news, path=url, source=source_url)
 		news_audio.save()
 	else:
 		print "upload to s3 fail"
