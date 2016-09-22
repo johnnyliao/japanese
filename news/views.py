@@ -74,7 +74,7 @@ class GetNewsView(generics.GenericAPIView):
 		取得news
 		"""
 		news = News.objects.all()
-		serializer = self.serializer_class(data=news, many=True)
+		serializer = self.serializer_class(news, many=True)
 
 		return Response(serializer.data, status=status.HTTP_200_OK)
 
