@@ -74,3 +74,9 @@ class FacebookConnectView(generics.GenericAPIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+def complete_login(request, login, app, token):
+    login.token = token
+    login.state = SocialLogin.state_from_request(request)
+    ret = complete_social_login(request, login)
+    if not ret:
+        ret = render_authentication_error(request)
