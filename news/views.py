@@ -65,6 +65,21 @@ class UpdateNewsView(generics.GenericAPIView):
 
 		return Response("ok", status=status.HTTP_200_OK)
 
+class GetNewsView(generics.GenericAPIView):
+	serializer_class = NewsSerializers
+	permission_classes = (AllowAny, )
+
+	def get(self, request):
+		"""
+		取得news
+		"""
+		news = News.objects.all()
+		serializer = self.serializer_class(data=news, many=True)
+
+		return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+
 
 def pres_file_from_website(news, filename, type):
 	print "downloading with requests"
