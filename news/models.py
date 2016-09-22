@@ -26,6 +26,7 @@ class News(models.Model):
 
 class NewsAudio(models.Model):
 	path = models.CharField(_(u"s3路徑"), max_length=1024)
+	source = models.CharField(_(u"來源路徑"), max_length=100)
 	news = models.OneToOneField('News', related_name='news_video', blank=True, null=True, verbose_name=_(u"新聞"))
 
 class NewsPhoto(models.Model):

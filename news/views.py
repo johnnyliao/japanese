@@ -93,7 +93,7 @@ def pres_file_from_website(news, filename, type):
 
 	url = upload_file_to_s3(filename, fn)
 	if url:
-		news_audio = NewsAudio(news=news, path=url)
+		news_audio = NewsAudio(news=news, path=url, source=url)
 		news_audio.save()
 	else:
 		print "upload to s3 fail"
