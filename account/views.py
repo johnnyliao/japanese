@@ -7,7 +7,7 @@ from rest_framework import serializers
 from rest_framework.renderers import JSONRenderer
 
 from account.models import User
-from account serializers import FacebookConnectSerializer
+from account.serializers import FacebookConnectSerializer
 
 import urllib, urllib2, json, simplejson
 
