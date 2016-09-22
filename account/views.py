@@ -7,7 +7,7 @@ from rest_framework import serializers
 from rest_framework.renderers import JSONRenderer
 
 from account.models import User
-from account.serializers import FacebookConnectSerializer
+from account.serializers import FacebookConnectSerializer, UserInfoSerializer
 
 import urllib, urllib2, json, simplejson
 
@@ -58,7 +58,8 @@ class FacebookConnectView(generics.GenericAPIView):
                 if user.is_active:
                     login(request, user)
 
-                return Response("login", status=status.HTTP_200_OK)
+                serializer = UserInfoSerializer(request.user)
+                return Response(serializer.data, status=status.HTTP_200_OK)
             except SocialToken.DoesNotExist:
                 pass
 
@@ -68,7 +69,8 @@ class FacebookConnectView(generics.GenericAPIView):
                 fb_login = fb_complete_login(request, app, token)
 
                 complete_login(request, fb_login, app, token)
-                return Response("login", status=status.HTTP_200_OK)
+                serializer = UserInfoSerializer(request.user)
+                return Response(serializer.data, status=status.HTTP_200_OK)
             except requests.RequestException as e:
                 return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
         else:

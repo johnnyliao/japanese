@@ -12,3 +12,9 @@ from datetime import datetime, timedelta
 class FacebookConnectSerializer(serializers.Serializer):
     access_token = serializers.CharField()
 
+class UserInfoSerializer(serializers.ModelSerializer):
+
+	class Meta:
+		model = User
+
+
