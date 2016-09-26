@@ -107,11 +107,13 @@ def pres_audio_from_website(news, filename, type):
 
 def pres_photo_from_website(news, filename, type):
 	print "downloading with requests"
-	file_name = filename.split('/')[-1]
 	source_url = filename
-	print source_url
+	file_name = filename.split('/')[-1]
+
+	file_name = file_name.split('?')[0]
+
 	r = requests.get(source_url)
-	fn = "/tmp/"+file_name
+	fn = "/tmp/"+filename
 	with open(fn, "wb") as code:
 		code.write(r.content)
 
