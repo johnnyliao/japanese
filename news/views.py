@@ -117,7 +117,7 @@ def pres_photo_from_website(news, filename, type):
 	file_name = file_name.split('?')[0]
 
 	r = requests.get(source_url)
-	fn = "/tmp/"+filename
+	fn = "/tmp/"+file_name
 	with open(fn, "wb") as code:
 		code.write(r.content)
 
