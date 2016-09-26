@@ -4,7 +4,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from news.models import News, NewsAudio, NewsPhoto, AWS
-from news.serializers import NewsSerializers
+from news.serializers import NewsSerializers, GetNewsSerializers, NewsListSerializers
 from django.contrib import auth
 from rest_framework import generics, status
 from rest_framework.response import Response
@@ -27,10 +27,10 @@ from django.core.exceptions import ObjectDoesNotExist
 from boto.s3.key import Key
 
 class UpdateNewsView(generics.GenericAPIView):
-	serializer_class = NewsSerializers
+	serializer_class = GetNewsSerializers
 	permission_classes = (AllowAny, )
 
-	def get(self, request):
+	def post(self, request, format=None):
 		"""
 		更新news
 		"""
@@ -73,17 +73,25 @@ class UpdateNewsView(generics.GenericAPIView):
 		return Response("ok", status=status.HTTP_200_OK)
 
 class GetNewsView(generics.GenericAPIView):
-	serializer_class = NewsSerializers
+	serializer_class = GetNewsSerializers
 	permission_classes = (AllowAny, )
 
-	def get(self, request):
+	def post(self, request):
 		"""
 		取得news
 		"""
-		news = News.objects.all()
-		serializer = self.serializer_class(news, many=True)
+		serializer = self.serializer_class(data=request.DATA)
+		if serializer.is_valid():
+			start = serializer.data.get('start', None)
+			limit = serializer.data.get('limit', None)
 
-		return Response(serializer.data, status=status.HTTP_200_OK)
+			news = News.objects.all()
+			if start != None and limit != None:
+				news = news[start:limit]
+
+			serializer = NewsListSerializers(news, many=True)
+
+			return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 
