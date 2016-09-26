@@ -26,13 +26,13 @@ class News(models.Model):
 
 class NewsAudio(models.Model):
 	path = models.CharField(_(u"s3路徑"), max_length=1024)
-	source = models.CharField(_(u"來源路徑"), max_length=100)
+	source = models.CharField(_(u"來源路徑"), max_length=400)
 	news = models.OneToOneField('News', related_name='news_video', blank=True, null=True, verbose_name=_(u"新聞"))
 
 class NewsPhoto(models.Model):
 	path = models.CharField(_(u"s3路徑"), max_length=1024)
 	news = models.OneToOneField('News', related_name='news_photo', blank=True, null=True, verbose_name=_(u"新聞"))
-	source = models.CharField(_(u"來源路徑"), max_length=100)
+	source = models.CharField(_(u"來源路徑"), max_length=400)
 
 class AWS(models.Model):
 	key_id = models.CharField(_(u"AWS_ACCESS_KEY_ID"), max_length=100)

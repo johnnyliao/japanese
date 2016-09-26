@@ -18,6 +18,7 @@ import requests
 import os
 import boto
 import settings
+import re
 from django.utils import timezone
 from django.db.models import Q, Count
 from itertools import chain
@@ -107,9 +108,12 @@ def pres_audio_from_website(news, filename, type):
 
 def pres_photo_from_website(news, filename, type):
 	print "downloading with requests"
+	if not re.search("http://www3.nhk.or.jp/news/html/", filename):
+		print "image url error return!"
+		return
+
 	source_url = filename
 	file_name = filename.split('/')[-1]
-
 	file_name = file_name.split('?')[0]
 
 	r = requests.get(source_url)
