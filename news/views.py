@@ -61,7 +61,13 @@ class UpdateNewsView(generics.GenericAPIView):
 				news = News(news_id=news_id, rev=rev, title=title, link=link, pubdate=pubdate, description=description, content=content)
 				news.save()
 
-				pres_file_from_website(news, result['content']['audio'], "audio")
+				if result['content']['audio']:
+					print "pres audio..."
+					pres_audio_from_website(news, result['content']['audio'], "audio")
+
+				if result['content']['image']:
+					print "pres photo..."
+					pres_photo_from_website(news, result['content']['image'], "image")
 
 		return Response("ok", status=status.HTTP_200_OK)
 
@@ -81,7 +87,7 @@ class GetNewsView(generics.GenericAPIView):
 
 
 
-def pres_file_from_website(news, filename, type):
+def pres_audio_from_website(news, filename, type):
 	print "downloading with requests"
 	file_name = filename.split('.')
 	source_url = 'http://www3.nhk.or.jp/news/easy/' + file_name[0] + '/' + filename
@@ -95,6 +101,24 @@ def pres_file_from_website(news, filename, type):
 	if url:
 		news_audio = NewsAudio(news=news, path=url, source=source_url)
 		news_audio.save()
+	else:
+		print "upload to s3 fail"
+		pass
+
+def pres_photo_from_website(news, filename, type):
+	print "downloading with requests"
+	file_name = filename.split('/')[-1]
+	source_url = filename
+	print source_url
+	r = requests.get(source_url)
+	fn = "/tmp/"+file_name
+	with open(fn, "wb") as code:
+		code.write(r.content)
+
+	url = upload_file_to_s3(file_name, fn)
+	if url:
+		news_photo = NewsPhoto(news=news, path=url, source=source_url)
+		news_photo.save()
 	else:
 		print "upload to s3 fail"
 		pass
