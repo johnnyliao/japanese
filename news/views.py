@@ -45,7 +45,7 @@ class UpdateNewsView(generics.GenericAPIView):
 				news = News.objects.get(news_id=news_id)
 				print "id exiets continue"
 				continue
-			except ObjectDoesNotExist:
+			exceptions ObjectDoesNotExist:
 				r = requests.get('http://mazii.net/api/news/' + news_id)
 
 				if r.status_code != 200:
@@ -91,7 +91,7 @@ class GetNewsView(generics.GenericAPIView):
 
 			serializer = NewsListSerializers(news, many=True)
 
-			return Response(serializer.data, status=status.HTTP_200_OK)
+			return Response({"news": serializer.data}, status=status.HTTP_200_OK)
 
 
 
