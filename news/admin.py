@@ -21,6 +21,9 @@ class NewsAudioAdmin(SalmonellaMixin, admin.ModelAdmin):
 class NewsPhotoAdmin(SalmonellaMixin, admin.ModelAdmin):
     list_display = ["news", "path", "source"]
 
+class CollectNewsAdmin(SalmonellaMixin, admin.ModelAdmin):
+    list_display = ["user"]
+    salmonella_fields  = ["user", "news"]
 
 class AWSAdmin(SalmonellaMixin, admin.ModelAdmin):
     list_display = ["key_id", "s_key"]
@@ -28,5 +31,6 @@ class AWSAdmin(SalmonellaMixin, admin.ModelAdmin):
 admin.site.register(News, NewsAdmin)
 admin.site.register(NewsAudio, NewsAudioAdmin)
 admin.site.register(NewsPhoto, NewsPhotoAdmin)
+admin.site.register(CollectNews, CollectNewsAdmin)
 admin.site.register(AWS, AWSAdmin)
 

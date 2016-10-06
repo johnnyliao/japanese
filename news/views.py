@@ -3,8 +3,7 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
-from news.models import News, NewsAudio, NewsPhoto, AWS
-from news.serializers import NewsSerializers, GetNewsSerializers, NewsListSerializers
+from news.models import News, NewsAudio, NewsPhoto, AWS, CollectNews
 from django.contrib import auth
 from rest_framework import generics, status
 from rest_framework.response import Response
@@ -93,7 +92,24 @@ class GetNewsView(generics.GenericAPIView):
 
 			return Response({"news": serializer.data}, status=status.HTTP_200_OK)
 
+	permission_classes = (IsAuthenticated, )
 
+	def post(self, request):
+		"""
+		收藏news
+		"""
+		serializer = self.serializer_class(data=request.DATA)
+		if serializer.is_valid():
+			news_id = serializer.data.get('news_id')
+
+			obj, create = CollectNews.objects.get_or_create(user=request.user)
+			if create:
+				obj.save()
+
+			obj.news.add(News.objects.get(id=news_id))
+			obj.save()
+
+			return Response({"status": True}, status=status.HTTP_200_OK)
 
 
 def pres_audio_from_website(news, filename, type):

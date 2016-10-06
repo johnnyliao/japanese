@@ -37,3 +37,7 @@ class NewsPhoto(models.Model):
 class AWS(models.Model):
 	key_id = models.CharField(_(u"AWS_ACCESS_KEY_ID"), max_length=100)
 	s_key = models.CharField(_(u"AWS_SECRET_ACCESS_KEY"), max_length=100)
+
+class CollectNews(models.Model):
+	user = models.OneToOneField('account.User', related_name='user_collect_news', verbose_name=_(u"user"))
+	news = models.ManyToManyField('News', related_name='collect_news', verbose_name=_(u"新聞"))

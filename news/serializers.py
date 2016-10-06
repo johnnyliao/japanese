@@ -40,3 +40,5 @@ class NewsListSerializers(serializers.ModelSerializer):
 class GetNewsSerializers(serializers.Serializer):
 	start = serializers.IntegerField(required=False)
 	limit = serializers.IntegerField(required=False)
+
+	news_id = serializers.IntegerField()

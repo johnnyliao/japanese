@@ -26,7 +26,7 @@ ADMIN_MENU_ORDER = (
     (_(u"使用者設定"), ("account.User")),
     (_(u"單字設定"), ("course.Word", "course.Verb", "course.UChiYoSo")),
     (_(u"文法設定"), ("course.Grammar", "course.GrammarExample", "course.GrammarImage")),
-    (_(u"新聞設定"), ("news.News", "news.NewsAudio", "news.NewsPhoto", "news.AWS")),
+    (_(u"新聞設定"), ("news.News", "news.NewsAudio", "news.NewsPhoto", "news.AWS", "news.CollectNews")),
 )
 
 
