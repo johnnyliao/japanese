@@ -4,6 +4,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from news.models import News, NewsAudio, NewsPhoto, AWS, CollectNews
+from news.serializers import NewsSerializers, GetNewsSerializers, NewsListSerializers, AddCollectNewsSerializers
 from django.contrib import auth
 from rest_framework import generics, status
 from rest_framework.response import Response
@@ -92,6 +93,8 @@ class GetNewsView(generics.GenericAPIView):
 
 			return Response({"news": serializer.data}, status=status.HTTP_200_OK)
 
+class AddCollectNewsView(generics.GenericAPIView):
+	serializer_class = AddCollectNewsSerializers
 	permission_classes = (IsAuthenticated, )
 
 	def post(self, request):
